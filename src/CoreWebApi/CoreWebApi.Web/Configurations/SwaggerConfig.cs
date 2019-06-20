@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace CoreWebApi.Web
+namespace CoreWebApi.Api.Configurations
 {
     internal class SwaggerConfig
     {

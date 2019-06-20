@@ -10,8 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MediatR;
+using CoreWebApi.Api.Configurations;
 
-namespace CoreWebApi.Web
+namespace CoreWebApi.Api
 {
     public class Startup
     {
@@ -27,6 +29,8 @@ namespace CoreWebApi.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             SwaggerConfig.ConfigureServices(services);
+            services.AddMediatR(typeof(Startup).Assembly);
+
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

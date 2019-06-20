@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CoreWebApi.Web.Controllers
+namespace CoreWebApi.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : BaseApiV1Controller 
     {
+        private IMediator _mediator;
+
+        public ValuesController(IMediator mediator) 
+        {
+            _mediator = mediator;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(await _mediator.Send(new GetValuesQuery()));
+//            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
