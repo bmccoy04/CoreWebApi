@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CoreWebApi.Core.Shared;
+using System;
 using System.Collections.Generic;
 
 namespace CoreWebApi.Core.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -18,6 +17,5 @@ namespace CoreWebApi.Core.Entities
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<Blog> Blogs { get; set; }
-
     }
 }

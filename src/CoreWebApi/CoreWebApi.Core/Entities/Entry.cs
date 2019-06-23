@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CoreWebApi.Core.Shared;
+using System;
 using System.Collections.Generic;
 
 namespace CoreWebApi.Core.Entities
 { 
-    public class Entry
+    public class Entry : BaseEntity
     {
-        public int Id { get; set; }
-
         public DateTime PublishDate { get; set; }
 
         public string Title { get; set; }

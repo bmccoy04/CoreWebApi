@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CoreWebApi.Core.Shared;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreWebApi.Core.Entities
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
-        public int Id { get; set; }
-
         public DateTime CommentDate { get; set; }
 
         public string Text { get; set; }
