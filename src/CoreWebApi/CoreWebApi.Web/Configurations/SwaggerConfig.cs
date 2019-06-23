@@ -6,9 +6,9 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace CoreWebApi.Api.Configurations
 {
-    internal class SwaggerConfig
+    public class SwaggerConfig
     {
-        internal static void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -16,7 +16,7 @@ namespace CoreWebApi.Api.Configurations
             });
         }
 
-        internal static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c => 
