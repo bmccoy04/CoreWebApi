@@ -5,8 +5,6 @@ namespace CoreWebApi.Core.Entities
 {
     public class Comment
     {
-
-        [Required()]
         public int Id { get; set; }
 
         public DateTime CommentDate { get; set; }
