@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CoreWebApi.Infrastructure.Data
 {
@@ -22,9 +23,9 @@ namespace CoreWebApi.Infrastructure.Data
             return _appDbContext.Set<T>().SingleOrDefault(e => e.Id == id);
         }
 
-        public List<T> List<T>() where T : BaseEntity
+        public IEnumerable<T> List<T>() where T : BaseEntity
         {
-            return _appDbContext.Set<T>().ToList();
+            return _appDbContext.Set<T>();
         }
 
         public T Add<T>(T entity) where T : BaseEntity

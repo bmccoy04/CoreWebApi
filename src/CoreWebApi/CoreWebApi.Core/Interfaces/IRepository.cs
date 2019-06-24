@@ -7,7 +7,7 @@ namespace CoreWebApi.Core.Interfaces
     {
         T GetById<T>(int id) where T : BaseEntity;
 
-        List<T> List<T>() where T : BaseEntity;
+        IEnumerable<T> List<T>() where T : BaseEntity;
         
         T Add<T>(T entity) where T : BaseEntity;
 
