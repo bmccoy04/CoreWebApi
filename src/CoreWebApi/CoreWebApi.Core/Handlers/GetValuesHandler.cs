@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CoreWebApi.Api.Controllers
+namespace CoreWebApi.Core.Handlers
 {
     public class GetValuesQuery : IRequest<IEnumerable<string>>
     {

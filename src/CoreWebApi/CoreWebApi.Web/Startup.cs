@@ -14,6 +14,7 @@ using MediatR;
 using CoreWebApi.Api.Configurations;
 using CoreWebApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using CoreWebApi.Core.Interfaces;
 
 namespace CoreWebApi.Api
 {
@@ -31,7 +32,7 @@ namespace CoreWebApi.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             SwaggerConfig.ConfigureServices(services);
-            services.AddMediatR(typeof(Startup).Assembly);
+            services.AddMediatR(typeof(IRepository).Assembly);
             services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
             );
