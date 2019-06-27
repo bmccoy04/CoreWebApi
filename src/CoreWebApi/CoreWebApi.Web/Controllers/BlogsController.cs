@@ -7,24 +7,27 @@ using CoreWebApi.Core.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace CoreWebApi.Api.Controllers
 {
     public class BlogsController : BaseApiV1Controller 
     {
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public BlogsController(IMediator mediator)
+        public BlogsController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         // GET: api/v1/Blogs
         [HttpGet]
         public async Task<IEnumerable<BlogDto>> Get()
         {
-            throw new Exception("Need to add auto mapper now!");
-            //return await _mediator.Send(new GetBlogsQuery());
+            //throw new Exception("Need to add auto mapper now!");
+            return _mapper.Map<IEnumerable<BlogDto>>(await _mediator.Send(new GetBlogsQuery()));
         }
 
         // GET: api/Blogs/5

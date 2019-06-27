@@ -26,7 +26,8 @@ namespace CoreWebApi.Core.Handlers
 
         public Task<IEnumerable<Blog>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_repository.List<Blog>());
+            //return Task.FromResult(_repository.List<Blog>());
+            return Task.FromResult((new List<Blog>{new Blog(){Id = 1}}).AsEnumerable());
         }
 
     }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MediatR;
+using AutoMapper;
 using CoreWebApi.Api.Configurations;
 using CoreWebApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,8 @@ namespace CoreWebApi.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             SwaggerConfig.ConfigureServices(services);
             services.AddMediatR(typeof(IRepository).Assembly);
+            services.AddAutoMapper(typeof(IRepository).Assembly, typeof(Startup).Assembly);
+            services.AddTransient<IRepository, EfRepository>();
             services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
             );

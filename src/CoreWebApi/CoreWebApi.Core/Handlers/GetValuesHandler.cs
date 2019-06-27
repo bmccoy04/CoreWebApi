@@ -14,7 +14,7 @@ namespace CoreWebApi.Core.Handlers
     {
         public Task<IEnumerable<string>> Handle(GetValuesQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult((new string[] { "value 1", "value 2" }).AsEnumerable()); 
+            return Task.FromResult((new string[] { "Bryan", "McCoy" }).AsEnumerable()); 
         }
 
     }
