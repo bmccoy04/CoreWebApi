@@ -10,6 +10,10 @@ namespace CoreWebApi.Api.Configurations
         {
             CreateMap<BlogDto, Blog>();
             CreateMap<Blog, BlogDto>();
+            CreateMap<CommentDto, Comment>();
+            CreateMap<Comment, CommentDto>();
+            CreateMap<EntryDto, Entry>();
+            CreateMap<Entry, EntryDto>();
         }
     }
 }

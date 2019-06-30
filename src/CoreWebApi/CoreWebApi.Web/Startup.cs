@@ -38,6 +38,7 @@ namespace CoreWebApi.Api
             services.AddTransient<IRepository, EfRepository>();
             services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
+                //options.UseInMemoryDatabase("CoreWebApi")
             );
 
         }
