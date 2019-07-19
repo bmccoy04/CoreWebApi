@@ -16,16 +16,11 @@ namespace CoreWebApi.IntegrationTests.Api
          }
 
         [Fact]
-        public async void Test1()
+        public async void Get_Blogs_Success()
         {
-           // var httpResponse = await _client.GetAsync("/api/v1/Blogs");
-
-            // Must be successful.
-//            httpResponse.EnsureSuccessStatusCode();
-
-            // Deserialize and examine results.
-//            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            Assert.True(true); 
+            var httpResponse = await _client.GetAsync("/api/v1/Blogs");
+            
+            Assert.True(httpResponse.IsSuccessStatusCode);
         }
     }
 }

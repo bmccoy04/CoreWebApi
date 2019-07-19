@@ -37,8 +37,8 @@ namespace CoreWebApi.Api
             services.AddAutoMapper(typeof(IRepository).Assembly, typeof(Startup).Assembly);
             services.AddTransient<IRepository, EfRepository>();
             services.AddDbContext<AppDbContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
-                //options.UseInMemoryDatabase("CoreWebApi")
+                //options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
+                options.UseInMemoryDatabase("CoreWebApi")
             );
 
         }
