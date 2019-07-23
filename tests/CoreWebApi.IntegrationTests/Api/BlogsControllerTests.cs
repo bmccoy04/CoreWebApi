@@ -16,7 +16,7 @@ namespace CoreWebApi.IntegrationTests.Api
          }
 
         [Fact]
-        public async void Get_Blogs_Success()
+        public async void GetBlogsSuccess()
         {
             var httpResponse = await _client.GetAsync("/api/v1/Blogs");
             
