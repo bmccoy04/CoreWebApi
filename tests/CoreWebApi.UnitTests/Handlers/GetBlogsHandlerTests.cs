@@ -17,13 +17,13 @@ namespace CoreWebApi.UnitTests.Handlers
             var repo = new Mock<IRepository>();
             var handler = new GetBlogsHandler(repo.Object);
             var request = new GetBlogsQuery();
-            var cancelationToken = new System.Threading.CancellationToken();
+            var cancellationToken = new System.Threading.CancellationToken();
 
             var expected = new List<Blog>() {new Blog {Id = 1, Name="My Test Blog"}};
 
             repo.Setup(x => x.List<Blog>()).Returns(expected);
 
-            var actual = await handler.Handle(request, cancelationToken);
+            var actual = await handler.Handle(request, cancellationToken);
 
             Assert.Equal(expected, actual);
         }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using CoreWebApi.Core.Entities;
+using CoreWebApi.Core.Interfaces;
 
 namespace CoreWebApi.Api.Controllers
 {
@@ -25,10 +26,9 @@ namespace CoreWebApi.Api.Controllers
 
         // GET: api/v1/Blogs
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetBlogsQuery query)
+        public async Task<IActionResult> Get()
         {
-            //throw new Exception("Need to add auto mapper now!");
-            return Ok(_mapper.Map<IEnumerable<BlogDto>>(await _mediator.Send(query)));
+            return Ok(_mapper.Map<IEnumerable<BlogDto>>(await _mediator.Send(new GetBlogsQuery())));
         }
 
         // GET: api/Blogs/5

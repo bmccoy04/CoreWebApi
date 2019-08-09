@@ -1,0 +1,78 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using AutoMapper;
+using CoreWebApi.Core.Interfaces;
+using CoreWebApi.Infrastructure.Data;
+using MediatR;
+using MediatR.Pipeline;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
+
+
+namespace CoreWebApi.Api.Configurations
+{
+    public class SimpleInjectorConfig
+    {
+        private static Container _container;
+
+        public static void ConfigureServices(IServiceCollection services)
+        {
+            _container = new Container();
+
+            services.AddSimpleInjector(_container, options =>
+            {
+                options.AddAspNetCore()
+                    .AddControllerActivation()
+                    .AddViewComponentActivation();
+            });
+
+            _container.Register<IRepository, EfRepository>(Lifestyle.Transient);
+
+            _container.RegisterSingleton<IMediator, Mediator>();
+            _container.Register<IMapper, Mapper>();
+
+            var assemblies = GetAssemblies().ToArray();
+            _container.Register(typeof(IRequestHandler<,>), assemblies);
+            var notificationHandlerTypes = _container.GetTypesToRegister(typeof(INotificationHandler<>), assemblies, new TypesToRegisterOptions
+            {
+                IncludeGenericTypeDefinitions = true,
+                IncludeComposites = false,
+            });
+            _container.Collection.Register(typeof(INotificationHandler<>), notificationHandlerTypes);
+            _container.Collection.Register(typeof(IPipelineBehavior<,>), new[]
+            {
+                typeof(RequestPreProcessorBehavior<,>),
+                typeof(RequestPostProcessorBehavior<,>),
+            });
+
+
+            _container.Register(() => new ServiceFactory(_container.GetInstance), Lifestyle.Singleton);
+
+            services.AddHttpContextAccessor();
+            services.EnableSimpleInjectorCrossWiring(_container);
+            services.UseSimpleInjectorAspNetRequestScoping(_container);
+
+        }
+
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            _container.CrossWire<AppDbContext>(app);
+            app.UseSimpleInjector(_container, options => { options.UseLogging(); });
+            
+            _container.Verify();
+        }
+
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            yield return typeof(IMediator).GetTypeInfo().Assembly;
+            yield return typeof(EfRepository).GetTypeInfo().Assembly;
+            yield return typeof(IRepository).GetTypeInfo().Assembly;
+        }
+    }
+}

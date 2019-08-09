@@ -32,10 +32,14 @@ namespace CoreWebApi.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             SwaggerConfig.ConfigureServices(services);
-            services.AddMediatR(typeof(IRepository).Assembly);
-            services.AddAutoMapper(typeof(IRepository).Assembly, typeof(Startup).Assembly);
-            services.AddTransient<IRepository, EfRepository>();
+
+            //services.AddMediatR(typeof(IRepository).Assembly);
+//            services.AddAutoMapper(typeof(IRepository).Assembly, typeof(Startup).Assembly);
+
+            SimpleInjectorConfig.ConfigureServices(services);
+
             services.AddDbContext<AppDbContext>(options => 
                 //options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
                 options.UseInMemoryDatabase("CoreWebApi")
@@ -56,7 +60,7 @@ namespace CoreWebApi.Api
             }
 
             SwaggerConfig.Configure(app, env);
-
+            SimpleInjectorConfig.Configure(app, env);
             app.UseHttpsRedirection();
             app.UseMvc();
         }
