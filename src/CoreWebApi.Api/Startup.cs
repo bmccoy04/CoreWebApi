@@ -35,9 +35,6 @@ namespace CoreWebApi.Api
 
             SwaggerConfig.ConfigureServices(services);
 
-            //services.AddMediatR(typeof(IRepository).Assembly);
-//            services.AddAutoMapper(typeof(IRepository).Assembly, typeof(Startup).Assembly);
-
             SimpleInjectorConfig.ConfigureServices(services);
 
             services.AddDbContext<AppDbContext>(options => 
