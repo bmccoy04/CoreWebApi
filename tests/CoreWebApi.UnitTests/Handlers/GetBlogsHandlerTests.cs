@@ -6,6 +6,7 @@ using CoreWebApi.Core.Interfaces;
 using CoreWebApi.Core.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace CoreWebApi.UnitTests.Handlers
 {
@@ -15,7 +16,8 @@ namespace CoreWebApi.UnitTests.Handlers
         public async Task HandlesReturnListSuccess()
         {
             var repo = new Mock<IRepository>();
-            var handler = new GetBlogsHandler(repo.Object);
+            var logger = new Mock<ILogger>();
+            var handler = new GetBlogsHandler(repo.Object, logger.Object);
             var request = new GetBlogsQuery();
             var cancellationToken = new System.Threading.CancellationToken();
 
