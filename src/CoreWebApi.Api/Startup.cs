@@ -37,6 +37,8 @@ namespace CoreWebApi.Api
 
             SimpleInjectorConfig.ConfigureServices(services);
 
+            services.AddLogging();
+
             services.AddDbContext<AppDbContext>(options => 
                 //options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), b => b.MigrationsAssembly("CoreWebApi.Api"))
                 options.UseInMemoryDatabase("CoreWebApi")

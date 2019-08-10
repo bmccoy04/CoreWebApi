@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
@@ -35,6 +36,11 @@ namespace CoreWebApi.Api.Configurations
                     .AddControllerActivation()
                     .AddViewComponentActivation();
             });
+
+            _container.RegisterSingleton<ILogger>(() => new LoggerConfiguration()
+                                                    .MinimumLevel.Debug()
+                                                    .WriteTo.Console()
+                                                    .CreateLogger());
 
             _container.Register<IRepository, EfRepository>(Lifestyle.Transient);
 
