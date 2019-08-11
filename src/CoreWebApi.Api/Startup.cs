@@ -16,6 +16,8 @@ using CoreWebApi.Api.Configurations;
 using CoreWebApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using CoreWebApi.Core.Interfaces;
+using FluentValidation.AspNetCore;
+using CoreWebApi.Api.Dtos;
 
 namespace CoreWebApi.Api
 {
@@ -31,7 +33,9 @@ namespace CoreWebApi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+            .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BlogDto>())
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             SwaggerConfig.ConfigureServices(services);
 

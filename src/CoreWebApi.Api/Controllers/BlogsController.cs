@@ -40,16 +40,16 @@ namespace CoreWebApi.Api.Controllers
 
         // POST: api/Blogs
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BlogDto blog)
+        public async Task<IActionResult> Post([FromBody] SaveBlogQuery blog)
         {
-            return Ok(_mapper.Map<BlogDto>(await _mediator.Send(new SaveBlogQuery(_mapper.Map<Blog>(blog)))));
+            return Ok(await _mediator.Send(blog));
         }
 
         // PUT: api/Blogs/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] BlogDto blog)
+        public async Task<IActionResult> Put([FromBody] SaveBlogQuery blog)
         {
-            return Ok(_mapper.Map<BlogDto>(await _mediator.Send(new SaveBlogQuery(_mapper.Map<Blog>(blog)))));
+            return Ok(_mapper.Map<BlogDto>(await _mediator.Send(blog)));
         }
 
         // DELETE: api/ApiWithActions/5

@@ -5,10 +5,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using AutoMapper;
 using AutoMapper.Configuration;
+using CoreWebApi.Api.Behaviors;
 using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Handlers;
 using CoreWebApi.Core.Interfaces;
 using CoreWebApi.Infrastructure.Data;
+using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
@@ -42,13 +44,17 @@ namespace CoreWebApi.Api.Configurations
                                                     .WriteTo.Console()
                                                     .CreateLogger());
 
+            var assemblies = GetAssemblies().ToArray();
+
             _container.Register<IRepository, EfRepository>(Lifestyle.Transient);
 
             _container.RegisterSingleton<IMediator, Mediator>();
 
+            _container.Register<IValidatorFactory, FluentValidationFactory>(Lifestyle.Singleton);
+            _container.Register(typeof(IValidator<>), assemblies);
+
             _container.RegisterSingleton(() => GetMapper(_container));
 
-            var assemblies = GetAssemblies().ToArray();
             _container.Register(typeof(IRequestHandler<,>), assemblies);
             var notificationHandlerTypes = _container.GetTypesToRegister(typeof(INotificationHandler<>), assemblies, new TypesToRegisterOptions
             {
@@ -60,6 +66,7 @@ namespace CoreWebApi.Api.Configurations
             {
                 typeof(RequestPreProcessorBehavior<,>),
                 typeof(RequestPostProcessorBehavior<,>),
+                typeof(RequestValidationBehavior<,>)
             });
 
             _container.Collection.Register(typeof(IRequestPreProcessor<>), Enumerable.Empty<Type>());

@@ -1,5 +1,6 @@
 ﻿using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Interfaces;
+using FluentValidation;
 using MediatR;
 using Serilog;
 using System;
@@ -14,6 +15,12 @@ namespace CoreWebApi.Core.Handlers
     public class GetBlogsQuery : IRequest<IEnumerable<Blog>>
     {
 
+    }
+
+    public class GetBlogsQueryValidator : AbstractValidator<GetBlogsQuery>
+    {
+        public GetBlogsQueryValidator() {
+        }
     }
 
     public class GetBlogsHandler : IRequestHandler<GetBlogsQuery, IEnumerable<Blog>>
