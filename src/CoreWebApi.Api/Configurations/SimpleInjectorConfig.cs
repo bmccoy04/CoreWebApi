@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using AutoMapper;
 using AutoMapper.Configuration;
 using CoreWebApi.Api.Behaviors;
+using CoreWebApi.Core.Configurations;
 using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Handlers;
 using CoreWebApi.Core.Interfaces;

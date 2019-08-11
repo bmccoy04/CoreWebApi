@@ -7,6 +7,8 @@ using CoreWebApi.Core.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Serilog;
+using AutoMapper;
+using CoreWebApi.Core.Dtos;
 
 namespace CoreWebApi.UnitTests.Handlers
 {
@@ -17,13 +19,15 @@ namespace CoreWebApi.UnitTests.Handlers
         {
             var repo = new Mock<IRepository>();
             var logger = new Mock<ILogger>();
-            var handler = new GetBlogsHandler(repo.Object, logger.Object);
+            var mapper = new Mock<IMapper>();
+            var handler = new GetBlogsHandler(repo.Object, logger.Object, mapper.Object);
             var request = new GetBlogsQuery();
             var cancellationToken = new System.Threading.CancellationToken();
 
-            var expected = new List<Blog>() {new Blog {Id = 1, Name="My Test Blog"}};
+            var expected = new List<BlogDto>() {new BlogDto {Id = 1, Name="My Test Blog"}};
 
-            repo.Setup(x => x.List<Blog>()).Returns(expected);
+            repo.Setup(x => x.List<Blog>()).Returns(new List<Blog>() {new Blog {Id = 1, Name="My Test Blog"}});
+            mapper.Setup(x => x.Map<IEnumerable<BlogDto>>(expected)).Returns(expected);
 
             var actual = await handler.Handle(request, cancellationToken);
 

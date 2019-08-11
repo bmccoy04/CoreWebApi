@@ -1,4 +1,6 @@
-﻿using CoreWebApi.Core.Entities;
+﻿using AutoMapper;
+using CoreWebApi.Core.Dtos;
+using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CoreWebApi.Core.Handlers
 {
-    public class GetBlogsQuery : IRequest<IEnumerable<Blog>>
+    public class GetBlogsQuery : IRequest<IEnumerable<BlogDto>>
     {
 
     }
@@ -23,20 +25,22 @@ namespace CoreWebApi.Core.Handlers
         }
     }
 
-    public class GetBlogsHandler : IRequestHandler<GetBlogsQuery, IEnumerable<Blog>>
+    public class GetBlogsHandler : IRequestHandler<GetBlogsQuery, IEnumerable<BlogDto>>
     {
         private readonly IRepository _repository;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
-        public GetBlogsHandler(IRepository repository, ILogger logger)
+        public GetBlogsHandler(IRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public Task<IEnumerable<Blog>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<BlogDto>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_repository.List<Blog>());
+            return Task.FromResult(_mapper.Map<IEnumerable<BlogDto>>(_repository.List<Blog>()));
         }
 
     }

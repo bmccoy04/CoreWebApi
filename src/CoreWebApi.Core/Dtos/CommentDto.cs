@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreWebApi.Api.Dtos
+namespace CoreWebApi.Core.Dtos
 {
     public class CommentDto
     {

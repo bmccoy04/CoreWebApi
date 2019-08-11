@@ -1,8 +1,8 @@
 using AutoMapper;
-using CoreWebApi.Api.Dtos;
+using CoreWebApi.Core.Dtos;
 using CoreWebApi.Core.Entities;
 
-namespace CoreWebApi.Api.Configurations
+namespace CoreWebApi.Core.Configurations
 {
     public class MapperProfile : Profile 
     {

@@ -17,7 +17,7 @@ using CoreWebApi.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using CoreWebApi.Core.Interfaces;
 using FluentValidation.AspNetCore;
-using CoreWebApi.Api.Dtos;
+using CoreWebApi.Core.Dtos;
 
 namespace CoreWebApi.Api
 {
