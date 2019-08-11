@@ -9,22 +9,22 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Interfaces;
+using CoreWebApi.Core.Dtos;
 
 namespace CoreWebApi.Api.Controllers
 {
     public class BlogsController : BaseApiV1Controller 
     {
         private readonly IMediator _mediator;
-        private readonly IMapper _mapper;
 
-        public BlogsController(IMediator mediator, IMapper mapper)
+        public BlogsController(IMediator mediator)
         {
             _mediator = mediator;
-            _mapper = mapper;
         }
 
         // GET: api/v1/Blogs
         [HttpGet]
+        [Produces(typeof(IEnumerable<BlogDto>))]
         public async Task<IActionResult> Get()
         {
             return Ok(await _mediator.Send(new GetBlogsQuery()));
@@ -39,16 +39,16 @@ namespace CoreWebApi.Api.Controllers
 
         // POST: api/Blogs
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SaveBlogQuery blog)
+        public async Task<IActionResult> Post([FromBody] SaveBlogQuery blogQuery)
         {
-            return Ok(await _mediator.Send(blog));
+            return Ok(await _mediator.Send(blogQuery));
         }
 
         // PUT: api/Blogs/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] SaveBlogQuery blog)
+        public async Task<IActionResult> Put([FromBody] UpdateBlogQuery blogQuery)
         {
-            return Ok(await _mediator.Send(blog));
+            return Ok(await _mediator.Send(blogQuery));
         }
 
         // DELETE: api/ApiWithActions/5
