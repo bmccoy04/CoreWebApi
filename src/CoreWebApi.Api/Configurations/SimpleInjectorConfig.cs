@@ -66,7 +66,8 @@ namespace CoreWebApi.Api.Configurations
             {
                 typeof(RequestPreProcessorBehavior<,>),
                 typeof(RequestPostProcessorBehavior<,>),
-                typeof(RequestValidationBehavior<,>)
+                typeof(RequestValidationBehavior<,>),
+                typeof(RequestErrorHandlerBehavior<,>)
             });
 
             _container.Collection.Register(typeof(IRequestPreProcessor<>), Enumerable.Empty<Type>());

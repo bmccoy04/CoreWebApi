@@ -36,7 +36,6 @@ namespace CoreWebApi.Core.Handlers
 
         public Task<IEnumerable<Blog>> Handle(GetBlogsQuery request, CancellationToken cancellationToken)
         {
-            _logger.Debug("Get Blogs Handler");
             return Task.FromResult(_repository.List<Blog>());
         }
 

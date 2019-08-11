@@ -29,9 +29,9 @@ namespace CoreWebApi.Api.Behaviors
             //     .Where(f => f != null)
             //     .ToList();
             var failures = _validators.Validate(request);
+            _logger.Debug("---- validation handler called -----");
             if(!failures.IsValid)
             {
-                _logger.Debug("---- validation handler called -----");
                 _logger.Debug(failures.ToString());
                 throw new ValidationException(failures.ToString());
             }
