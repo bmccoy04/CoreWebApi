@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using CoreWebApi.Core.Entities;
+using CoreWebApi.Core.Exceptions;
 using CoreWebApi.Core.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -33,9 +34,14 @@ namespace CoreWebApi.Core.Handlers
 
         public Task<int> Handle(UpdateBlogQuery request, CancellationToken cancellationToken)
         {
-            var blog = new Blog() {Id  = 0, Name = request.Name};
+            var blog = _repository.GetById<Blog>(request.Id);
 
-            blog = _repository.Add(blog);
+            if(blog == null)
+                throw new ItemNotFoundException($"Can't find blog with id: {request.Id}");
+
+            blog.Name = request.Name;
+
+            _repository.Update<Blog>(blog);
 
             return Task.FromResult(blog.Id);
         }

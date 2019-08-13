@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using CoreWebApi.Core.Interfaces;
 using FluentValidation.AspNetCore;
 using CoreWebApi.Core.Dtos;
+using CoreWebApi.Api.Filters;
 
 namespace CoreWebApi.Api
 {
@@ -33,7 +34,9 @@ namespace CoreWebApi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddMvc(optoins =>{
+                optoins.Filters.Add(new CustomExceptionFilter());
+            })
             .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<BlogDto>())
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
