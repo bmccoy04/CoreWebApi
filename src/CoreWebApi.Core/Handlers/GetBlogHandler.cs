@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CoreWebApi.Core.Dtos;
 using CoreWebApi.Core.Entities;
+using CoreWebApi.Core.Exceptions;
 using CoreWebApi.Core.Interfaces;
 using FluentValidation;
 using MediatR;
@@ -41,9 +42,13 @@ namespace CoreWebApi.Core.Handlers
 
         public Task<BlogDto> Handle(GetBlogQuery request, CancellationToken cancellationToken)
         {
+            var blog = _repository.GetById<Blog>(request.Id);
+            
+            if(blog == null)
+                throw new ItemNotFoundException($"Can't find blog with id: {request.Id}");
+
             return Task.FromResult(
-                    _mapper.Map<BlogDto>(
-                        _repository.GetById<Blog>(request.Id)));
+                    _mapper.Map<BlogDto>(blog));
         }
     }
 }
