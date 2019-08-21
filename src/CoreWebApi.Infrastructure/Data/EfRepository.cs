@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using AutoMapper;
 using System.Threading.Tasks;
+using AutoMapper.QueryableExtensions;
 
 namespace CoreWebApi.Infrastructure.Data
 {
@@ -33,6 +35,13 @@ namespace CoreWebApi.Infrastructure.Data
         {
             return _appDbContext.Set<T>()
                                 .Where(predicate);
+        }
+
+        public IEnumerable<TOut> List<TIn, TOut>(Expression<Func<TIn, bool>> predicate) where TIn : BaseEntity
+        {
+            return _appDbContext.Set<TIn>()
+                                .Where(predicate)
+                                .ProjectTo<TOut>();
         }
         public T Add<T>(T entity) where T : BaseEntity
         {
