@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +29,11 @@ namespace CoreWebApi.Infrastructure.Data
             return _appDbContext.Set<T>();
         }
 
+        public IEnumerable<T> List<T>(Expression<Func<T, bool>> predicate) where T : BaseEntity
+        {
+            return _appDbContext.Set<T>()
+                                .Where(predicate);
+        }
         public T Add<T>(T entity) where T : BaseEntity
         {
             _appDbContext.Set<T>().Add(entity);

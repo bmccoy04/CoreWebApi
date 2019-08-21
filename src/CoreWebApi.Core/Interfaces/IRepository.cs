@@ -1,5 +1,7 @@
 ﻿using CoreWebApi.Core.Shared;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace CoreWebApi.Core.Interfaces
 {
@@ -8,6 +10,8 @@ namespace CoreWebApi.Core.Interfaces
         T GetById<T>(int id) where T : BaseEntity;
 
         IEnumerable<T> List<T>() where T : BaseEntity;
+        
+        IEnumerable<T> List<T>(Expression<Func<T, bool>> predicate) where T : BaseEntity ;
         
         T Add<T>(T entity) where T : BaseEntity;
 
