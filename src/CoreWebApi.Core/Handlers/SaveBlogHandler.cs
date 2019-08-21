@@ -2,21 +2,24 @@
 using System.Threading.Tasks;
 using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Interfaces;
+using FluentValidation;
 using MediatR;
 
 namespace CoreWebApi.Core.Handlers
 {
-    public class SaveBlogQuery : IRequest<Blog>
+    public class SaveBlogQuery : IRequest<int>
     {
-        public Blog Blog { get; set; }
-
-        public SaveBlogQuery(Blog blog)
-        {
-            this.Blog = blog;
+        public string Name { get; set; }
+    }
+    public class SaveBlogQueryValidator : AbstractValidator<SaveBlogQuery>
+    {
+        public SaveBlogQueryValidator() {
+            RuleFor(x => x.Name).Length(0, 1);
         }
     }
 
-    public class SaveBlogHandler : IRequestHandler<SaveBlogQuery, Blog>
+
+    public class SaveBlogHandler : IRequestHandler<SaveBlogQuery, int>
     {
         private readonly IRepository _repository;
 
@@ -25,16 +28,13 @@ namespace CoreWebApi.Core.Handlers
             _repository = repository;
         }
 
-        public Task<Blog> Handle(SaveBlogQuery request, CancellationToken cancellationToken)
+        public Task<int> Handle(SaveBlogQuery request, CancellationToken cancellationToken)
         {
-            var blog = request.Blog;
+            var blog = new Blog() {Id  = 0, Name = request.Name};
 
-            if (blog.Id > 0)
-                _repository.Update(blog);
-            else
-                blog = _repository.Add(blog);
+            blog = _repository.Add(blog);
 
-            return Task.FromResult(blog);
+            return Task.FromResult(blog.Id);
         }
     }
 

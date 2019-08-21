@@ -1,5 +1,6 @@
 ﻿using CoreWebApi.Core.Entities;
 using CoreWebApi.Core.Interfaces;
+using FluentValidation;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,14 @@ namespace CoreWebApi.Core.Handlers
             Id = id;
         }
 
+    }
+
+    public class DeleteBlogValidator : AbstractValidator<DeleteBlogQuery>
+    {
+        public DeleteBlogValidator()
+        {
+            RuleFor(x => x.Id).GreaterThan(0);
+        }
     }
 
     public class DeleteBlogHandler : IRequestHandler<DeleteBlogQuery, bool>

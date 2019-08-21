@@ -1,5 +1,9 @@
-﻿using CoreWebApi.Core.Entities;
+﻿using AutoMapper;
+using CoreWebApi.Core.Dtos;
+using CoreWebApi.Core.Entities;
+using CoreWebApi.Core.Exceptions;
 using CoreWebApi.Core.Interfaces;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CoreWebApi.Core.Handlers
 {
-    public class GetBlogQuery : IRequest<Blog>
+    public class GetBlogQuery : IRequest<BlogDto>
     {
         public GetBlogQuery(int id)
         {
@@ -18,18 +22,33 @@ namespace CoreWebApi.Core.Handlers
         public int Id { get; set; }
     }
 
-    public class GetBlogHandler : IRequestHandler<GetBlogQuery, Blog>
+    public class GetBlogValidator : AbstractValidator<GetBlogQuery>
+    {
+        public GetBlogValidator() {
+            RuleFor(x => x.Id).GreaterThan(0);
+        }
+    }
+
+    public class GetBlogHandler : IRequestHandler<GetBlogQuery, BlogDto>
     {
         private readonly IRepository _repository;
+        private readonly IMapper _mapper;
 
-        public GetBlogHandler(IRepository repository)
+        public GetBlogHandler(IRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public Task<Blog> Handle(GetBlogQuery request, CancellationToken cancellationToken)
+        public Task<BlogDto> Handle(GetBlogQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_repository.GetById<Blog>(request.Id));
+            var blog = _repository.GetById<Blog>(request.Id);
+            
+            if(blog == null)
+                throw new ItemNotFoundException($"Can't find blog with id: {request.Id}");
+
+            return Task.FromResult(
+                    _mapper.Map<BlogDto>(blog));
         }
     }
 }
