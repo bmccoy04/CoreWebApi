@@ -10,7 +10,7 @@ namespace CoreWebApi.Api.Controllers
 {
     
     [ApiController]
-    public class BaseApiV1Controller : ControllerBase
+    public class BaseApiController : ControllerBase
     {
 
     }

@@ -14,7 +14,7 @@ using CoreWebApi.Core.Dtos;
 namespace CoreWebApi.Api.Controllers
 {
     [Route("api/v1/blogs")]
-    public class BlogsController : BaseApiV1Controller 
+    public class BlogsController : BaseApiController 
     {
         private readonly IMediator _mediator;
 
