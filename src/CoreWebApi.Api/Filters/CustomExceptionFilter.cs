@@ -20,7 +20,7 @@ namespace CoreWebApi.Api.Filters
             var exception = context.Exception;
 
             if (exception is ItemNotFoundException)
-                SetExceptionResult(context, exception, HttpStatusCode.BadRequest);
+                SetExceptionResult(context, exception, HttpStatusCode.NotFound);
             else if (exception is ValidationException)
                 SetExceptionResult(context, exception, HttpStatusCode.BadRequest);
             else
