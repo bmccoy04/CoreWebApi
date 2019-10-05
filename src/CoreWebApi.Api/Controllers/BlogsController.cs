@@ -13,7 +13,8 @@ using CoreWebApi.Core.Dtos;
 
 namespace CoreWebApi.Api.Controllers
 {
-    public class BlogsController : BaseApiV1Controller 
+    [Route("api/v1/blogs")]
+    public class BlogsController : BaseApiController 
     {
         private readonly IMediator _mediator;
 
@@ -22,7 +23,7 @@ namespace CoreWebApi.Api.Controllers
             _mediator = mediator;
         }
 
-        // GET: api/v1/Blogs
+        // GET: api/v1/blogs
         [HttpGet]
         [Produces(typeof(IEnumerable<BlogDto>))]
         public async Task<IActionResult> Get()
@@ -30,35 +31,35 @@ namespace CoreWebApi.Api.Controllers
             return Ok(await _mediator.Send(new GetBlogsQuery()));
         }
 
-        // GET: api/Blogs/5
+        // GET: api/v1/blogs/5
         [HttpGet("{id}", Name = "Get")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await _mediator.Send(new GetBlogQuery(id)));
         }
 
-        // POST: api/Blogs
+        // POST: api/v1/blogs
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SaveBlogQuery blogQuery)
         {
             return Ok(await _mediator.Send(blogQuery));
         }
 
-        // PUT: api/Blogs/5
+        // PUT: api/v1/blogs/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody] UpdateBlogQuery blogQuery)
         {
             return Ok(await _mediator.Send(blogQuery));
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/v1/blogs/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await _mediator.Send(new DeleteBlogQuery(id)));
         }
 
-        [HttpGet("{id}/Entries")]
+        [HttpGet("{id}/entries")]
         public async Task<IActionResult> GetEntries(int id)
         {
             return Ok(await _mediator.Send(new GetBlogEntriesQuery(id)));

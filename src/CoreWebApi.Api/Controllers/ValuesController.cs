@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoreWebApi.Api.Controllers
 {
-    public class ValuesController : BaseApiV1Controller 
+    [Route("api/v1/values")]
+    public class ValuesController : BaseApiController 
     {
         private IMediator _mediator;
 

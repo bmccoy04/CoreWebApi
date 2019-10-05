@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoreWebApi.Api.Controllers
 {
     
-    [Route("api/v1/[controller]")]
     [ApiController]
-    public class BaseApiV1Controller : ControllerBase
+    public class BaseApiController : ControllerBase
     {
 
     }
